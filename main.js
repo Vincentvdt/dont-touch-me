@@ -1,10 +1,6 @@
 const block = document.querySelector('.block');
-const screenWidth = window.innerWidth;
-const blockWidth = parseInt(getComputedStyle(block).width, 10)
 let progressBar = block.querySelector('.progressBar')
 let isMoving = false;
-
-console.log(screenWidth)
 
 
 function throwRight(count) {
@@ -14,7 +10,7 @@ function throwRight(count) {
     let distance = Math.floor(20 * count)
     let destination = leftVal + distance;
 
-    let inc = count * 2;
+    let velocity = count * 5;
 
 
     let timerId = setInterval(function () {
@@ -24,14 +20,11 @@ function throwRight(count) {
             clearInterval(timerId);
         }
 
-        leftVal += (((destination - (leftVal + inc)) / distance) * inc) + inc / 2;
+        leftVal += (((destination - (leftVal + velocity)) / distance) * velocity) + velocity / 2;
         block.style.left = leftVal + 'px'
     }, 20)
 
 }
-
-// 100 1
-// 30 .03
 
 document.addEventListener('DOMContentLoaded', () => {
     let count = 0;
@@ -49,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBar.style.backgroundColor = "green";
         }
 
-
     })
 
     document.addEventListener("keyup", (e) => {
@@ -58,6 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         progressBar.style.width = "0%";
         count = 0;
+    })
 
+    document.querySelector('button').addEventListener("click", () => {
+        if (isMoving) return;
+        block.style.left = "10px"
     })
 })
